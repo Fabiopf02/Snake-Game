@@ -12,6 +12,7 @@ const food = {
   x: Math.floor(Math.random() * 15 + 1) * box,
   y: Math.floor(Math.random() * 15 + 1) * box,
 };
+let score = 0;
 
 const movements = {
   37: () => {
@@ -49,7 +50,13 @@ document.addEventListener('keydown', update);
 
 function update(event) {
   const move = movements[event.keyCode];
-  move();
+  if (move) move();
+}
+
+function drawScore() {
+  context.fillStyle = "#ffffff";
+  context.font = "16px Helvetica";
+  context.fillText("Score: "+score, 13 * box, box);
 }
 
 function startGame() {
@@ -68,6 +75,7 @@ function startGame() {
   createBackground();
   createSnake();
   drawFood();
+  drawScore();
 
   let snakeX = snake[0].x;
   let snakeY = snake[0].y;
@@ -81,6 +89,7 @@ function startGame() {
     snake.pop();
   }
   else {
+    score += 1;
     food.x = Math.floor(Math.random() * 15 + 1) * box;
     food.y = Math.floor(Math.random() * 15 + 1) * box;
   }
