@@ -9,6 +9,21 @@ snake[0] = {
 };
 let direction = "right";
 
+const movements = {
+  37: () => {
+    if (direction != "right") direction = "left";
+  },
+  38: () => {
+    if (direction != "down") direction = "up";
+  },
+  39: () => {
+    if (direction != "left") direction = "right";
+  },
+  40: () => {
+    if (direction != "up") direction = "down";
+  },
+}
+
 function createBackground() {
   context.fillStyle = '#000000';
   context.fillRect(0, 0, box * 16, box * 16);
@@ -21,7 +36,19 @@ function createSnake() {
   }
 }
 
+document.addEventListener('keydown', update);
+
+function update(event) {
+  const move = movements[event.keyCode];
+  move();
+}
+
 function startGame() {
+  if(snake[0].x > 15 * box && direction === "right") snake[0].x = 0;
+  if(snake[0].x < 0 && direction === "left") snake[0].x = box * 16;
+  if(snake[0].y > 15 * box && direction === "down") snake[0].y = 0;
+  if(snake[0].y < 0 && direction === "up") snake[0].y = box * 16;
+
   createBackground();
   createSnake();
 
