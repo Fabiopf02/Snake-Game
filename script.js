@@ -34,7 +34,7 @@ function createBackground() {
 }
 
 function createSnake() {
-  for(let i = 0;i < snake.length;i++) {
+  for(let i = 0; i < snake.length; i++) {
     context.fillStyle = '#ffffff';
     context.fillRect(snake[i].x, snake[i].y, box, box);
   }
@@ -57,6 +57,13 @@ function startGame() {
   if(snake[0].x < 0 && direction === "left") snake[0].x = box * 16;
   if(snake[0].y > 15 * box && direction === "down") snake[0].y = 0;
   if(snake[0].y < 0 && direction === "up") snake[0].y = box * 16;
+
+  for(let i = 1; i < snake.length; i++) {
+    if(snake[0].x === snake[i].x && snake[0].y === snake[i].y) {
+      clearInterval(game);
+      alert("Game Over :(");
+    }
+  }
 
   createBackground();
   createSnake();
@@ -89,4 +96,3 @@ function startGame() {
 }
 
 const game = setInterval(startGame, 100);
-
